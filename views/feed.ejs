@@ -15,21 +15,21 @@
 		</image>
 
 		<% xml_items.forEach(item => { %>
-				<item>
-					<title><![CDATA[ <%= item.title %> ]]></title>
-					<link><%= item.link %></link>
-					<author><%= item.author %></author>
-					<pubDate><%= item.pubDate %></pubDate>
-					<guid><%= item.guid %></guid>
-					<description><![CDATA[
-						<div>
-							<img src="<%= item.image %>" alt="<%= item.title %>" />
-						</div>
-						<%= item.description %>
+		<item>
+			<title><![CDATA[ <%= item.title %> ]]></title>
+			<link><%= item.link %></link>
+			<author><%= item.author %></author>
+			<pubDate><%= item.pubDate %></pubDate>
+			<guid><%= item.guid %></guid>
+			<description><![CDATA[
+				<div>
+					<img src="<%= item.image %>" alt="<%= item.title %>" />
+				</div>
+				<%= item.description %>
 
-						<div><a href="<%= item.link %>" target="_blank">View on Instagram</div>
-					]]></description>
-				</item>
+				<div><a href="<%= item.link %>" target="_blank">View on Instagram</div>
+			]]></description>
+		</item>
 		<% }); %>
 
 	</channel>

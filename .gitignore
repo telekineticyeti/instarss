@@ -77,3 +77,6 @@ pids
 
 # Output of 'npm pack'
 *.tgz
+
+# Development Notes
+dev_notes
