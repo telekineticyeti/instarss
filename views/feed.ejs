@@ -1,3 +1,36 @@
-<% include partials/xml_header %>
-<% include partials/xml_item %>
-<% include partials/xml_footer %>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+	<channel>
+		<title><%= instagram_username %></title>
+		<link><%= instagram_link %></link>
+		<description><%= instagram_description %></description>
+		<language>en-us</language>
+		<image>
+			<url><%= instagram_profile_picture %></url>
+			<title><%= instagram_username %></title>
+			<link><%= instagram_link %></link>
+			<width>150</width>
+			<height>150</height>
+			<description><%= instagram_description %></description>
+		</image>
+
+		<% xml_items.forEach(item => { %>
+				<item>
+					<title><![CDATA[ <%= item.title %> ]]></title>
+					<link><%= item.link %></link>
+					<author><%= item.author %></author>
+					<pubDate><%= item.pubDate %></pubDate>
+					<guid><%= item.guid %></guid>
+					<description><![CDATA[
+						<div>
+							<img src="<%= item.image %>" alt="<%= item.title %>" />
+						</div>
+						<%= item.description %>
+
+						<div><a href="<%= item.link %>" target="_blank">View on Instagram</div>
+					]]></description>
+				</item>
+		<% }); %>
+
+	</channel>
+</rss>
