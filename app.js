@@ -49,11 +49,24 @@ app.get('/feed/:username', (req, res, next) => {
 				instagram_profile_picture: profile_picture
 			});
 			res.end();
-		}).catch((error) => {
+		})
+		.catch((error) => {
 			res.status(500).send('Error: ' + error);
 		});
 });
 
+app.get('/debug/:username', (req, res, next) => {
+	let url = "https://www.instagram.com/" + req.params.username + "/media/";
+	get_instagram_items(url)
+		.then(data => {
+			res.type('application/json');
+			res.send(JSON.stringify(data, null, 4));
+			res.end();
+		})
+		.catch((error) => {
+			res.status(500).send('Error: ' + error);
+		});;
+});
 
 function get_instagram_items(instagram_url) {
 	return new Promise((resolve, reject) => {
