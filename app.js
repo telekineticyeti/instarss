@@ -49,37 +49,48 @@ app.get('/feed/:username', (req, res, next) => {
 				instagram_profile_picture: profile_picture
 			});
 			res.end();
+		}).catch((error) => {
+			res.status(500).send('Error: ' + error);
 		});
 });
 
 
 function get_instagram_items(instagram_url) {
 	return new Promise((resolve, reject) => {
-
 		var get_instagram_data = https
 			.get(instagram_url, response => {
 				response.setEncoding("utf8");
 				let body = '';
 				console.log(instagram_url + ' [' + response.statusCode + ']');
 
-				response.on('data', data => {
-					body += data;
-				});
+				if (response.statusCode !== 200) {
+					reject('The feed returned an unexpected HTTP code: ' + response.statusCode);
+				} else {
+					response.on('data', data => {
+						body += data;
+					});
 
-				response.on('error', err => {
-					console.log('Feed Data error: ' + err);
-					reject(err);
-				});
+					response.on('error', error => {
+						console.log('Feed Data error: ' + error);
+						reject(error);
+					});
 
-				response.on('end', () => {
-					body = JSON.parse(body);
-					resolve(body);
-				});
+					response.on('end', () => {
+						try {
+							body = JSON.parse(body);
+						} catch (error) {
+							reject(error);
+						}
+						resolve(body);
+					});
+				}
 			})
 		});
-		get_instagram_data.on('error', err => {
-			console.log('There was an error fetching the feed: ' + err);
-			reject(err);
+
+		get_instagram_data.on('error', error => {
+			console.log('There was an error fetching the feed: ' + error);
+			reject(error);
 		});
+
 		get_instagram_data.end();
 }
