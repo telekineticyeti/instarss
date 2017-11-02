@@ -59,11 +59,16 @@ function get_instagram_items(instagram_url) {
 		var get_instagram_data = https
 			.get(instagram_url, response => {
 				response.setEncoding("utf8");
-				let body = "";
-				console.log(instagram_url + " Responded: " + response.statusCode);
+				let body = '';
+				console.log(instagram_url + ' [' + response.statusCode + ']');
 
 				response.on('data', data => {
 					body += data;
+				});
+
+				response.on('error', err => {
+					console.log('Feed Data error: ' + err);
+					reject(err);
 				});
 
 				response.on('end', () => {
@@ -73,6 +78,7 @@ function get_instagram_items(instagram_url) {
 			})
 		});
 		get_instagram_data.on('error', err => {
+			console.log('There was an error fetching the feed: ' + err);
 			reject(err);
 		});
 		get_instagram_data.end();
