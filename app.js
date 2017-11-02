@@ -94,3 +94,8 @@ function get_instagram_items(instagram_url) {
 
 		get_instagram_data.end();
 }
+
+process.on('uncaughtException', function(error) {
+	console.log('process.on handler');
+	console.log(error);
+});
