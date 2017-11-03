@@ -33,8 +33,8 @@ app.get('/feed/:username', (req, res, next) => {
 				}
 
 				instagram_users_items.push({
-					title: item.caption.text,
-					description: item.caption.text,
+					title: item_text,
+					description: item_text,
 					link: 'https://www.instagram.com/p/' + item.code + '?taken-by=' + item.user.username,
 					author: item.user.full_name,
 					pubDate: moment.unix(item.created_time).format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
