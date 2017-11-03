@@ -26,6 +26,11 @@ app.get('/feed/:username', (req, res, next) => {
 
 			for (var i = 0; i < data.items.length; i++) {
 				let item = data.items[i];
+				let item_text = "";
+
+				if (item.caption !== null) {
+					item_text = item.caption.text;
+				}
 
 				instagram_users_items.push({
 					title: item.caption.text,
