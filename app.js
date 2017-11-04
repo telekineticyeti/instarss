@@ -37,8 +37,18 @@ app.get('/feed/:username', (req, res, next) => {
 
 				// Handler for multi-image posts (carousel_media)
 				if (item.type === "carousel") {
-					for (const carousel_item in item.carousel_media) {
-						item_images.push(item.carousel_media[carousel_item].images.standard_resolution.url);
+					for (carousel_item in item.carousel_media) {
+						if (item.carousel_media[carousel_item].type === "image") {
+							item_images.push(item.carousel_media[carousel_item].images.standard_resolution.url);
+						}
+
+						if (item.carousel_media[carousel_item].type === "video") {
+							item_videos.push({
+								src: item.carousel_media[carousel_item].videos.standard_resolution.url,
+								width: item.carousel_media[carousel_item].videos.standard_resolution.width,
+								height: item.carousel_media[carousel_item].videos.standard_resolution.height
+							});
+						}
 					}
 				}
 

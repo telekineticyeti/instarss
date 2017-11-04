@@ -32,9 +32,11 @@
 					<% }); %>
 				<% }; %>
 
-				<% item.images.forEach(image => { %>
-					<p><img style="display: inline-block; max-width: 100%;" src="<%= image %>" alt="<%= item.caption %>" /></p>
-				<% }); %>
+				<% if (item.images.length > 0) { %>
+					<% item.images.forEach(image => { %>
+						<p><img style="display: inline-block; max-width: 100%;" src="<%= image %>" alt="<%= item.caption %>" /></p>
+					<% }); %>
+				<% }; %>
 				</div>
 				<%= item.caption %>
 
