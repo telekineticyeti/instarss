@@ -26,21 +26,43 @@ app.get('/feed/:username', (req, res, next) => {
 
 			for (var i = 0; i < data.items.length; i++) {
 				let item = data.items[i];
-				let item_text = "";
+				let item_caption = "";
+				let item_images = [];
+				let item_videos = [];
 
+				// Handler for null captioned images
 				if (item.caption !== null) {
-					item_text = item.caption.text;
+					item_caption = item.caption.text;
+				}
+
+				// Handler for multi-image posts (carousel_media)
+				if (item.type === "carousel") {
+					for (const carousel_item in item.carousel_media) {
+						item_images.push(item.carousel_media[carousel_item].images.standard_resolution.url);
+					}
+				}
+
+				if (item.type === "image") {
+					item_images.push(item.images.standard_resolution.url);
+				}
+
+				// Handler for single video
+				if (item.type === "video") {
+					item_videos.push({
+						src: item.videos.standard_resolution.url,
+						width: item.videos.standard_resolution.width,
+						height: item.videos.standard_resolution.height
+					});
 				}
 
 				instagram_users_items.push({
-					title: item_text,
-					description: item_text,
+					caption: item_caption,
 					link: 'https://www.instagram.com/p/' + item.code + '?taken-by=' + item.user.username,
 					author: item.user.full_name,
 					pubDate: moment.unix(item.created_time).format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
 					guid: item.code,
-					image: item.images.standard_resolution.url,
-					like_count: item.likes.count
+					images: item_images,
+					videos: item_videos
 				});
 			}
 

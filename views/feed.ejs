@@ -16,16 +16,27 @@
 
 		<% xml_items.forEach(item => { %>
 		<item>
-			<title><![CDATA[ <%= item.title %> ]]></title>
+			<title><![CDATA[ <%= item.caption %> ]]></title>
 			<link><%= item.link %></link>
 			<author><%= item.author %></author>
 			<pubDate><%= item.pubDate %></pubDate>
 			<guid><%= item.guid %></guid>
 			<description><![CDATA[
-				<div>
-					<img src="<%= item.image %>" alt="<%= item.title %>" />
+				<div style="text-align: center;">
+
+				<% if (item.videos.length > 0) { %>
+					<% item.videos.forEach(video => { %>
+						<video width="<%= video.width %>" height="<%= video.height %>" controls>
+							<source src="<%= video.src %>" type="video/mp4">
+						</video>	
+					<% }); %>
+				<% }; %>
+
+				<% item.images.forEach(image => { %>
+					<p><img style="display: inline-block; max-width: 100%;" src="<%= image %>" alt="<%= item.caption %>" /></p>
+				<% }); %>
 				</div>
-				<%= item.description %>
+				<%= item.caption %>
 
 				<div><a href="<%= item.link %>" target="_blank">View on Instagram</div>
 			]]></description>
