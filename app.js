@@ -14,7 +14,7 @@ app.listen(9615, () => {
 app.get('/feed/:username', (req, res, next) => {
 	let instagram_user = req.params.username;
 	let instagram_url = "https://www.instagram.com/" + instagram_user;
-	let instagram_media_url = instagram_url + "/media/";
+	let instagram_media_url = "https://www.instagram.com/" + req.params.username + "/?__a=1";
 	let xml_feed_url = 'http://' + req.header('host') + '/' + instagram_user;
 
 	let instagram_users_items = [];
@@ -93,7 +93,7 @@ app.get('/feed/:username', (req, res, next) => {
 });
 
 app.get('/debug/:username', (req, res, next) => {
-	let url = "https://www.instagram.com/" + req.params.username + "/media/";
+	let url = "https://www.instagram.com/" + req.params.username + "/?__a=1";
 	get_instagram_items(url)
 		.then(data => {
 			res.type('application/json');
